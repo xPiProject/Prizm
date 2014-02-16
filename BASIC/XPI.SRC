@@ -1,0 +1,100 @@
+'------------------------------------------------------------------------
+'xPi V2000 for Calculator
+'fx-CG10/20 Version
+
+'Copyleft (c) 2014
+
+'This program is free software: you can redistribute it and/or modify
+'it under the terms of the GNU General Public License as published by
+'the Free Software Foundation, either version 3 of the License, or
+'(at your option) any later version.
+
+'This program is distributed in the hope that it will be useful,
+'but WITHOUT ANY WARRANTY; without even the implied warranty of
+'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'GNU General Public License for more details.
+
+'You should have received a copy of the GNU General Public License
+'along with this program.  If not, see <http://www.gnu.org/licenses/>.
+'------------------------------------------------------------------------
+
+10000->A
+0->E
+?
+"xPi V2000"
+"For calculator"
+"fx-CG10/20 version"
+""
+"Digits(4~1000)"?->X
+If X<4 Or X>1000 Or MOD(X,4)¡Ù0:Then
+"Incorrect Input"
+Stop
+IfEnd
+X/4*14->C
+
+For 1->I To 999
+2000->List 1[I]
+Next
+For 1->I To 999
+2000->List 2[I]
+Next
+For 1->I To 999
+2000->List 3[I]
+Next
+For 1->I To 502
+2000->List 4[I]
+Next
+
+ClrText
+0->I
+While C¡Ù0
+0->D
+C*2->G
+C->B
+While 1
+If B+1<1000:Then
+Int (D+List 1[B+1]*A)->D
+Else If B+1<1999:Then
+Int (D+List 2[B+1-999]*A)->D
+Else If B+1<2998:Then
+Int (D+List 3[B+1-1998]*A)->D
+Else
+Int (D+List 4[B+1-2997]*A)->D
+IfEnd
+IfEnd
+IfEnd
+G-1->G
+If B+1<1000:Then
+MOD(D,G)->List 1[B+1]
+Else If B+1<1999:Then
+MOD(D,G)->List 2[B+1-999]
+Else If B+1<2998:Then
+MOD(D,G)->List 3[B+1-1998]
+Else
+MOD(D,G)->List 4[B+1-2997]
+IfEnd
+IfEnd
+IfEnd
+Int (D/G)->D
+G-1->G
+B-1->D
+If B=0:Then
+Break
+IfEnd
+D*B->D
+WhileEnd
+C-14->C
+
+If I>34:Then ?
+0->I
+ClrText
+IfEnd
+Locate 1+4*MOD(I,5),1+Int (I/5),Int (E+D/A)
+If C=0:Then
+Stop
+IfEnd
+
+I+1->I
+
+MOD(D,A)->E
+WhileEnd
